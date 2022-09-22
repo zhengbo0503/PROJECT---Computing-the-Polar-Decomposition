@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+
+\usepackage{a4} 
+\input{clem.tex}
+
+\title{Project : Computing the Polar Decomposition}
+\author{Zhengbo Zhou%
+    \thanks{%
+        School of Mathematics,
+        University of Manchester,
+        Manchester, M13 9PL, England
+        (\texttt{zhengbo.zhou@student.manchester.ac.uk}).
+    }
+}
+\date{September 22, 2022}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Norms and Singular Value Decomposition}\label{sec:norms-svd}
+
+\subsection{Vector Norms} \label{subsec:vector-norms}
+
+Before introducing matrix norm, a brief illustration of vector norm is necessary.
+
+\begin{definition}
+  [Vector Norm] \label{def:vector-norm}
+  A vector norm on $\C^n$ is a function $\gnorm{\cdot} : \C^n \to \R$ such that it satisfies the following properties
+  \begin{enumerate}
+    \item $\gnorm{x} \geq 0$ for all $x\in\C\n$,
+    \item $\gnorm{x} = 0$ if and only if $x = 0$,
+    \item $\gnorm{\lambda x} = \abs{\lambda} \gnorm{x}$ for all $\lambda \in \C$ and $x \in \C^n$,
+    \item $\gnorm{x + y} \leq \gnorm{x} + \gnorm{y}$ for all $x,y\in \C^n$.
+  \end{enumerate}
+\end{definition}
+
+\begin{example}
+    For $x\in\C^n$, 
+    \begin{equation}\notag
+        \begin{aligned}
+            \text{1-norm : }& \gnorm{x}_1 = \sum_{i = 1}^n \abs{x_i},\\
+            \text{2-norm (Euclidean Norm) : }& \norm{x} = \left(\sum_{i = 1}^n \abs{x_i}^2\right)^{1/2} = \sqrt{x\ctp x},\\
+            \text{$\infty$-norm : } & \gnorm{x}_{\infty} = \max_{1\leq i \leq n} \abs{x_i}.
+        \end{aligned}
+    \end{equation}
+    
+    These are all special cases of the $p$-norm,
+    \begin{equation}\label{eq:vector-p-norm}
+        \gnorm{x}_p = \left(\sum_{i = 1}^n \abs{x_i}^p\right)^{1/p},\quad q \geq 1.
+    \end{equation}
+\end{example}
+
+\subsection{Matrix Norms} \label{subsec:matrix-norms}
+\begin{definition}
+    [Matrix Norms]
+    A matrix norm is a function $\gnorm{\cdot}:\C\mn \to \R$ satisfies the analogues of the four properties in the Definition~\ref{def:vector-norm}.
+\end{definition}
+
+\begin{example}
+    [Frobenius norm]
+    For $A\in\C\mn$, the Frobenius norm is defined as
+    \begin{equation}
+        \notag
+        \gnorm{A}_F = \left(\sum_{i = 1}^m \sum_{j = 1}^n \abs{a_{ij}}^2\right)^{1/2} = \left(\tr(A\ctp A)\right)^{1/2}.
+    \end{equation}
+\end{example}
+
+\begin{example}
+    [Subordinate matrix norm]
+    The matrix norm that is induced by a vector norm is called the subordinate norm. Suppose $\gnorm{\cdot}$ is a vector norm, the corresponding subordinate matrix norm is defined as 
+    \begin{equation}
+        \notag 
+        \gnorm{A} = \max_{\gnorm{x} = 1} \gnorm{Ax}, \quad A \in \C\mn, \quad x \in \C^n.
+    \end{equation}
+
+    Apply this definition into \eqref{eq:vector-p-norm}, we have the definition for the matrix $p$-norm 
+    \begin{equation}
+        \notag 
+        \gnorm{A}_p = \max_{\gnorm{x}_p = 1} \gnorm{Ax}_{p}.
+    \end{equation}
+
+    The subordinate matrix norms for $1$-, $2$- and $\infty$-norms can be shown to have the following form 
+    \begin{equation}
+        \notag 
+        \begin{aligned}
+            \gnorm{A}_1 &= \max_{1\leq j \leq n} \sum_{i = 1}^m \abs{a_{ij}}, \\
+            \gnorm{A}_2 &= \left(\rho(A\ctp A)\right)^{1/2} = \sigma_{\max}(A),\\
+            \gnorm{A}_\infty & = \max_{1 \leq i \leq m} \sum_{j = 1}^n \abs{a_{ij}},
+        \end{aligned}
+    \end{equation}
+    where $\rho(A)$ represents the spectral radius of the matrix $A$ which defined as the largest eigenvalue in magnitude of $A$ and $\sigma_{\max}(A)$ represents the largest singular value of $A$.
+\end{example}
+
+We say a matrix norm $\gnorm{\cdot}$ is consistent if for all $A,B\in\C\mn$, the following inequality holds whenever the product $AB$ defines 
+\begin{equation}
+    \notag 
+    \gnorm{AB} \leq \gnorm{A}\gnorm{B}.
+\end{equation}
+The Frobenius norm and all subordinate norms are consistent.
+
+\subsection{Singular Value Decomposition}\label{subsec:svd}
+\begin{theorem}
+    [Singular value decomposition]
+    \label{thm:svd}
+    If $A\in\C\mn$, $m\geq n$, then there exists two unitary matrices $U\in\C^{m\times m}$ and $V\in\C\nn$ such that 
+    \begin{equation}\label{eq:svd}
+        A = U\Sigma V\ctp,\quad \Sigma = \diag(\sigma_1,\dots,\sigma_p)\in\R\mn,\quad p = \min\{m,n\},
+    \end{equation}
+    where $\sigma_1,\dots,\sigma_p$ are all non-negative and arranged in non-ascending order. We denote~\eqref{eq:svd} as the singular value decomposition (SVD) of $A$ and $\sigma_1,\dots,\sigma_p$ are the singular values of $A$.
+\end{theorem}
+
+
+
+
+
+\section{Polar Decomposition and its Properties}\label{sec:polar-properties}
+
+Throughout this project, we focused on $A\in\C\nn$. In complex analysis, it is known that for any $\alpha\in\C$, we can write $\alpha$ in polar form, namely $\alpha = r\eu^{\im \theta}$. The polar decomposition is its matrix analogue.
+
+\begin{theorem}
+    [Polar Decomposition~{\ycite[2008, Theorem~8.1]{2008higham-fm}}] \label{def:matrix-norm}
+    Let $A\in\C\mn$ with $m \geq n$. There exists a matrix $U\in\C\mn$ with orthonormal columns and a unique Hermitian positive semidefinite matrix $H\in\C\nn$ such that $A = UH$. The matrix $H$ is given by $H = \left(A\ctp A\right)^{1/2}$. If the matrix $A$ is full rank, then $H$ is Hermitian positive definite and $U$ is uniquely determined.
+\end{theorem}
+
+\begin{proof}
+    Suppose $\rank(A) = r$, then let $A$ has a SVD $A = P\Sigma_r V\ctp$. The polar decomposition of $A$ can be formed in terms of the SVD:
+    \begin{equation}
+        \notag 
+        A = P
+        \begin{bmatrix}
+            I_r & 0 \\
+            0 & I_{m-r,n-r}
+        \end{bmatrix}
+        V\ctp V 
+        \begin{bmatrix}
+            \Sigma_r & 0 \\
+            0 & 0_{n-r,n-r}
+        \end{bmatrix}
+        V\ctp =: UH.
+    \end{equation}
+    where 
+    \begin{equation}
+        \notag 
+        U = P
+        \begin{bmatrix}
+            I_r & 0 \\
+            0 & I_{m-r,n-r}
+        \end{bmatrix}
+        V\ctp
+        ,\quad 
+        H = 
+        V 
+        \begin{bmatrix}
+            \Sigma_r & 0 \\
+            0 & 0_{n-r,n-r}
+        \end{bmatrix}
+        V\ctp.
+    \end{equation}
+    
+    We can test the columns' orthonormality of $U$ by performing
+    \begin{equation}
+        \notag 
+        U\ctp U = V
+        \begin{bmatrix}
+            I_r & 0 \\ 0 & I_{n - r, m-r}
+        \end{bmatrix}
+        P\ctp P
+        \begin{bmatrix}
+            I_r & 0 \\ 0 & I_{m-r,n-r}
+        \end{bmatrix}
+        V\ctp = I_{n,n}.
+    \end{equation}
+
+    The symmetry of $H$ is obvious. Notice that, $H$ and $\begin{bmatrix} \Sigma_r & 0 \\ 0 & 0_{n-r,n-r}\end{bmatrix}$ are unitarily similar, hence they share the same eigenvalues. Equivalently speaking, the eigenvalues of $H$ are the singular values of $A$. From the Theorem~\ref{thm:svd}, the singular values of $A$ are all real and non-negative, therefore $H$ is Hermitian positive semidefinite and it is uniquely determined via 
+    \begin{equation}
+        \left(A\ctp A\right)^{1/2} = \left(H\ctp U\ctp U H\right)^{1/2} = \left(H^2\right)^{1/2} = H.
+    \end{equation}
+
+    If $A$ is full rank, namely $r = n$, then all the singular values of $A$ are positive and consequently $H$'s eigenvalues are all positive, therefore it is Hermitian positive definite. Clearly if $H$ is nonsingular, then $U$ is uniquely determined by $U = AH\inv$.
+\end{proof}
+
+We will refer to $U$ as the unitary polar factor.
+
+\begin{theorem}
+    For $A\in\C\mn$, let $A = UH$ be its polar decomposition. $A$ is normal if and only if $U$ and $H$ are commute.
+\end{theorem}
+
+\begin{proof}
+    $(\Leftarrow)$: If $U$ and $H$ are commute, then 
+    \begin{equation}
+        \notag
+        \begin{aligned}
+            AA\ctp &= \left(UH\right)\left(UH\right)\ctp\\
+                & = \left(HU\right)\left(HU\right)\ctp = HUU\ctp H\ctp = H^2. \\
+            A\ctp A & = H^2 = AA\ctp.
+        \end{aligned}
+    \end{equation}
+    Hence $A$ is normal.
+
+    $(\Rightarrow)$: If $A$ is normal
+\end{proof}
+
+
+
+
+\newpage 
+\nocite{*}
+\bibliographystyle{aomplain}
+\bibliography{bib.bib}
+
+
+
+
+
+\end{document}
