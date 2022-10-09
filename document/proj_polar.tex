@@ -89,10 +89,10 @@ Before introducing the matrix norm, a brief illustration of the vector norm is n
             \gnorm{A}_\infty & = \max_{1 \leq i \leq m} \sum_{j = 1}^n \abs{a_{ij}},
         \end{aligned}
     \end{equation}
-    where $\rho(A)$ represents the spectral radius of the matrix $A$, which is defined as the largest eigenvalue in magnitude of $A$ and $\sigma_{\max}(A)$ represents the largest singular value of $A$.
+    where $\rho(A)$ represents the spectral radius of the matrix $A$, which is defined as the largest eigenvalue in magnitude of $A$, and $\sigma_{\max}(A)$ represents the largest singular value of $A$.
 \end{example}
 
-We say a matrix norm $\gnorm{\cdot}$ is consistent if for all $A,B\in\C\mn$, the following inequality holds whenever the product $AB$ defines 
+We say a matrix norm $\gnorm{\cdot}$ is consistent if for all $A,B$, the following inequality holds whenever the product $AB$ defines 
 \begin{equation}
     \notag 
     \gnorm{AB} \leq \gnorm{A}\gnorm{B}.
@@ -185,7 +185,7 @@ has a SVD $A = P\Sigma_r V$, then the expression for the polar factor
 in~\eqref{eq:expression-of-factors} can be simplified to $U = PV\ctp$. 
 Furthermore, if $\rank(A) = n$, then $H = V\Sigma_n V\ctp$.
 
-We can restrict our attention to nonsingular square matrices instead of general rectangular matrices. Let $A\in\C\mn$ with $m\geq n$ have the QR factorization $A = QR$ where $Q\in\C\mn$ and $R\in \C\nn$. We can find the polar decomposition $R = UH$ and $A = QU \cdot H$ becomes the polar decomposition of $A$. In addition, If $A\in\C\nn$ is singular, we can produce a complete orthogonal decomposition
+We can restrict our attention to nonsingular square matrices instead of general rectangular matrices. Let $A\in\C\mn$ with $m\geq n$ have the QR factorization $A = QR$ where $Q\in\C^{m\times m}$ and $R\in \C\mn$. We can find the polar decomposition $R = UH$ and $A = QU \cdot H$ becomes the polar decomposition of $A$. In addition, If $A\in\C\nn$ is singular, we can produce a complete orthogonal decomposition
 \begin{equation}
     A = P
     \begin{bmatrix}
@@ -230,7 +230,7 @@ where $P$ and $Q$ are unitary, and $R\in\C^{r\times r}$ is nonsingular and upper
         \notag 
         PV\ctp  = \frac{2}{\pi} P\Sigma V\ctp \int_0^\infty (t^2 I + V\Sigma\ctp \Sigma V\ctp)\inv \dd t.
     \end{equation}
-    Premultiply $P\ctp$ and using the symmetry of $\Sigma$ we have 
+    Pre--multiply $P\ctp$ and using the symmetry of $\Sigma$ we have 
     \begin{equation}
         \label{eq:1} 
         V\ctp = \frac{2}{\pi} \Sigma V\ctp \int_0^\infty (t^2 I + V\Sigma^2 V\ctp)\inv \dd t.
@@ -244,7 +244,7 @@ where $P$ and $Q$ are unitary, and $R\in\C^{r\times r}$ is nonsingular and upper
             & = \frac{2}{\pi} \Sigma \int_0^\infty \left(t^2V + V\Sigma^2\right)\inv \dd t.
         \end{aligned}
     \end{equation}
-    Postmultiply $(V\ctp)^{-1} = V$ on both sides we have 
+    Post--multiply $(V\ctp)^{-1} = V$ on both sides we have 
     \begin{equation}
         \notag 
         \begin{aligned}
@@ -448,9 +448,9 @@ using the similar approach as proof of Theorem~\ref{thm:newton-converge}. Let $P
     \notag 
     \begin{aligned}
         D_{k+1} &= P\ctp X_{k+1} V\\
-        & = \frac{1}{2}P\ctp \left(X_k\left(3I - X_k\ctp X_k\right)\right)V.\\
+        & = \frac{1}{2}P\ctp \left(X_k\left(3I - X_k\ctp X_k\right)\right)V\\
         & = \frac{1}{2} (3P\ctp X_k V - P\ctp X_kX_k\ctp X_k V)\\
-        & = \frac{1}{2} (3P\ctp X_k V - P\ctp X_k V V\ctp X_k\ctp P P\ctp X_k V)
+        & = \frac{1}{2} (3P\ctp X_k V - P\ctp X_k V V\ctp X_k\ctp P P\ctp X_k V).
     \end{aligned}
 \end{equation}
 From $D_k = P\ctp X_k V$, we have $D_k\ctp = V\ctp X_k\ctp P$ and then we can rewrite $D_{k+1}$ as
@@ -587,13 +587,13 @@ Therefore, ignoring operation counts, the matrix multiplication needs to be 1.5 
 
 \section{Implementation}
 
-In this section, we will present an algorithm that computes the polar decomposition of $A$ using a mixture of the Newton iteration and the Newton--Schulz iteration. The motivation is that matrix multiplication is very fast on high-performance computers. The outline will be the following: Given a nonsingular matrix $A\in\C\nn$, starts with the Newton iteration and switches to the Newton--Schulz iteration when the latter is guaranteed to converge. This will produce the unitary polar factor $U$ of $A$, and then $H$ can be constructed by $H = U\ctp A$. In order to ensure the symmetry for $H$, we calculate $H$ via
+In this section, we will present an algorithm that computes the polar decomposition of $A$ using a mixture of the Newton iteration and the Newton--Schulz iteration. The motivation is that matrix multiplication is very fast on high-performance computers. The outline will be the following: Given a nonsingular matrix $A\in\C\nn$, starts with the Newton iteration and switches to the Newton--Schulz iteration when the latter is guaranteed to converge. This procedure will produce the unitary polar factor $U$ of $A$, and then $H$ can be constructed by $H = U\ctp A$. In order to ensure the symmetry for $H$, we calculate $H$ via
 \begin{equation}
     \notag 
     H = \frac{1}{2}\left(U\ctp A + A\ctp U\right).
 \end{equation}
 
-We need to determine an appropriate condition for us to switch from Newton to Newton--Schulz. From Theorem~\ref{thm:newtonSchulzConverge}, the Newton--Schulz iteration will converge if the input $X_k$ satisfies $\norm{X_k} < \sqrt{3}$. However, this is rather expensive to compute, and we should view the convergence in the following alternative way.
+We need to determine an appropriate condition for us to switch from Newton to Newton--Schulz. From Theorem~\ref{thm:newtonSchulzConverge}, the Newton--Schulz iteration will converge if the input $X_k$ satisfies $\norm{X_k} < \sqrt{3}$. However, matrix 2-norm is rather expensive to compute, and we should view the convergence in the following alternative way.
 
 \begin{theorem}
     \label{thm:Conv-in-R}
@@ -657,7 +657,7 @@ We can use $R_{k+1}$ to measure the distance between the iterator $X_k$ and the 
     Hence we proved the inequality~\eqref{eq:DistEquiv}.
 \end{proof}
 
-This result shows that the two measures of orthonormality $\gnorm{A\ctp A - I}$ and $\gnorm{A-U}$ are essentially equivalent, hence the residual $\gnorm{X_k\ctp X_k - I}$ of an iterate is essentially the same as the error $\gnorm{U-X_k}$.
+This result shows that the two measures of orthonormality $\gnorm{A\ctp A - I}$ and $\gnorm{A-U}$ are essentially equivalent, hence the residual $\gnorm{X_k\ctp X_k - I}$ of an iterate is essentially the same as the error $\gnorm{U-X_k}$~\ycite[2008, Sec.~8.7]{2008higham-fm}.
 
 \subsection{Switching Condition}
 Instead of switching from Newton iteration to Newton--Schulz iteration at the $k$th step where $\norm{X_k} < \sqrt{3}$, we can use Theorem~\ref{thm:Conv-in-R} to characterise this absolute convergence. If $\gnorm{R_{k}} < 1$, then 
@@ -717,7 +717,7 @@ The algorithm can be implemented  using MATLAB as shown in Appendix~\ref{app:pol
 
 \section{Numerical Testings}
 \subsection{Experiment Setup}
-To test the correctness of our code, we examine $\gnorm{A - UH}_{\infty}/\gnorm{A}_\infty$ and $\gnorm{U\ctp U - I}_\infty$. In addition, I will compare our computed solution $U$ with the reference solution $U_\mathrm{ref}$ which is computed at quadruple precision using Multiprecision Computing Toolbox~\footnote{\url{https://www.advanpix.com/}}.
+To test the correctness of our code, we examine the relative error $\gnorm{A - UH}_{\infty}/\gnorm{A}_\infty$ and $\gnorm{U\ctp U - I}_\infty$. In addition, I will compare our computed solution $U$ with the reference solution $U_\mathrm{ref}$ which is computed at quadruple precision using Multiprecision Computing Toolbox~\footnote{\url{https://www.advanpix.com/}}.
 Our experiments are running under the following environment:
 \begin{itemize}
     \item CPU : Intel(R) Core(TM) i5-9600KF CPU @ 3.70GHz
@@ -785,12 +785,12 @@ Therefore, the Newton's method requires a lot of iterations in order to drag the
 \end{table}
 
 \section{Further Application}
-We can utilize the polar decomposition to compute the square root of a symmetric positive definite matrix. Given a symmetric positive definite matrix $A\in\R\nn$. We can compute the Cholesky factor $R$ of $A$ such that $A = R\tp R$. Then apply Algorithm~\ref{alg:poldec} to $R$, and we have $R = UH$ where $U$ is unitary (in this case, orthogonal) and $H$ is symmetric positive definite. Substitute back into the Cholesky decomposition of $A$, we have 
+We can utilize the polar decomposition to compute the square root of a symmetric positive definite matrix. Given a symmetric positive definite matrix $A\in\R\nn$, we can firstly compute the Cholesky factor $R$ of $A$ such that $A = R\tp R$, and then apply Algorithm~\ref{alg:poldec} to $R$ which gives $R = UH$ where $U$ is unitary (in this case, orthogonal) and $H$ is symmetric positive definite. Substitute back into the Cholesky decomposition of $A$, we have 
 \begin{equation}
     \notag 
     A = R\tp R = (UH)\tp (UH) = H\tp U\tp U H = H^2.
 \end{equation}
-Therefore, the symmetric positive definite part of the Cholesky factor of $A$ is the square root of $A$ for any symmetric positive definite matrix $A$.
+Therefore, the symmetric positive definite part of the polar decomposition of the Cholesky factor of $A$ is the square root of $A$ for any symmetric positive definite matrix $A$.
 
 The implementation is straightforward using MATLAB builtin function \inline{chol} which computes the Cholesky factor, and the function \inline{polsqrt.m} can be found in Appendix~\ref{app:matrix-squareroot}. A simple test is carried out below:
 \begin{lstlisting}
