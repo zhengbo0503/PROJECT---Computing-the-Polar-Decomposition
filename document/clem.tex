@@ -1,6 +1,6 @@
 %%% Algorithm %%%
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage{algorithm,algorithmicx,algpseudocode}
+
 %%%
 \usepackage{color,bold-extra,mathrsfs,float,bbm}
 \usepackage[tableposition=t]{caption}
@@ -12,7 +12,8 @@
 linkcolor=red,
 urlcolor=red,
 citecolor=blue,
-bookmarksopen=true]{hyperref}
+bookmarksopen=true,
+pageanchor=false]{hyperref}
 \usepackage[hyperpageref]{backref}
 \renewcommand*{\backref}[1]{}% for backref < 1.33 necessary
 \renewcommand*{\backrefalt}[4]{%
@@ -27,6 +28,16 @@ No citations.%
 \usepackage{enumerate,amsmath,amsfonts,amssymb,comment,mathtools}
 \usepackage{amsthm}
 
+%%
+
+% \usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Polar Decomposition Project}
+\rhead{\leftmark}
+% \fancyfoot[C]{Page~\thepage~of~\pageref*{LastPage}}
+\setlength{\headheight}{14.49998pt}
+
 %% Fonts %%
 
 \usepackage[T1]{fontenc}
@@ -37,6 +48,11 @@ No citations.%
 \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
 \usefont{T1}{qzc}{m}{it}
 \usepackage{eucal}
+
+% \usepackage[lucidascale=false]{lucimatx}
+% \AtBeginDocument{
+%   \DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+%   \DeclareSymbolFontAlphabet{\mathbb}{AMSb}}
 
 %% MATLAB Code %%% From Dr. Chris Johnson
 \usepackage{listings}
@@ -52,7 +68,7 @@ No citations.%
   keywordstyle=\color{blue},
   numberstyle=\tiny\color{codegray},
   stringstyle=\color{codepurple},
-  basicstyle=\linespread{1}\ttfamily\small,
+  basicstyle=\linespread{0.9}\ttfamily\footnotesize,
   breakatwhitespace=false,
   breaklines=true,
   captionpos=b,
@@ -68,7 +84,7 @@ No citations.%
 }
 \lstset{style=mystyle}
 % \inline is a custom macro
-\def\inline{\lstinline[basicstyle=\upshape\ttfamily]}
+\def\inline{\lstinline[basicstyle=\upshape\ttfamily\small]}
 
 \DeclareCaptionLabelSeparator{separation}{:\quad}
 
@@ -149,7 +165,7 @@ No citations.%
 
 %%%% Greek Letters %%%%
 \renewcommand{\a}{\alpha}
-\renewcommand{\l}{\lambda}
+\newcommand{\lam}{\lam}
 \renewcommand{\L}{\Lambda}
 \newcommand{\vL}{\varLambda}
 \renewcommand{\b}{\beta}
@@ -170,6 +186,7 @@ No citations.%
 \renewcommand{\Sigma}{\varSigma} % skew sigma
 \newcommand{\off}{\mathsf{off}} % off operator
 \newcommand{\gnorm}[1]{\|{#1}\|}
+\newcommand{\inorm}[1]{\|{#1}\|_{\infty}}
 
 %% Defined Proof Evironment %%
 

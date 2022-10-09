@@ -1,0 +1,31 @@
+% testing routine
+clc; clear; close all;
+rng(1);
+print = true;
+A = hilb(6); A_mp = mp(A, 34);
+term_tol = sqrt(2*eps("double"))*sqrt(size(A,1));
+[U_d,H_d,its_d,del_d,Rk_d] = poldec(A);
+[U_q,H_q,its_q,del_q,Rk_q] = poldec(A,5e-34);
+% printing results
+fprintf("Condition number = %d\n", cond(A,"inf"));
+fprintf("Iteration required = %d\n", its_d);
+tmp1 = norm(A - U_d*H_d, "inf")/norm(A,"inf");
+fprintf("norm(A-UH)/norm(A) = %d\n", tmp1);
+tmp2 = norm(U_d'*U_d - eye(size(A,1)));
+fprintf("norm(U'*U-I) = %d\n", tmp2);
+tmp3 = norm(U_d - U_q,"inf");
+fprintf("norm(U-U_ref) = %d\n", tmp3);
+
+if print 
+    semilogy(2:its_d, del_d(2:its_d+1),'-^k');
+    hold on;
+    semilogy(1:its_d, Rk_d(1:its_d),'-^r');
+    semilogy(1:its_d, ones(1,its_d).*term_tol, '--b');
+    legend("$\|X_{k+1}-X_{k}\|_{\infty}/\|X_{k+1}\|_{\infty}$", ...
+        "$\|X_k^*X_k - I\|_{\infty}$", ...
+        "Terminate tolerance", ...
+        "Location","southwest", ...
+        "Interpreter", "latex");
+    xlabel("Iteration");
+    ylabel("Value");
+end
