@@ -27,13 +27,13 @@ Finally we test our code using several test matrices.
 
 ## File Outline 
 
-LaTeX related files are all located at the `document` folder, and the MATLAB related files are located at the `code` folder.
+LaTeX related files are all located at the [document](./document/) folder, and the MATLAB related files are located at the [code](./code/) folder.
 
-* File `proj_description.pdf` is the description of this project.
-* File `.\document\proj_polar.pdf` is the report for this project.
-* File `.\code\poldec.m` is the MATLAB code for the polar decomposition.
-* File `.\code\polsqrt.m` is the MATLAB code for computing matrix square root using the polar decomposition.
+* File [proj_description.pdf](./proj_description.pdf) is the description of this project.
+* File [./document/proj_polar.pdf](./document/proj_polar.pdf) is the report for this project.
+* File [./code/poldec.m](./code/poldec.m) is the MATLAB code for the polar decomposition.
+* File [./code/polsqrt.m](./code/polsqrt.m) is the MATLAB code for computing matrix square root using the polar decomposition.
 
-Notice that some of the figures are located at `.\code\` rather than `.\document\figs\`, and this is due to the `export_fig` command (for export figures in MATLAB) saves the figure to the current directory which is `.\code\`.
+Notice that some of the figures are located at [./code/](./code/) rather than [./document/figs/](./document/figs/), and this is due to the `export_fig` command (for export figures in MATLAB) saves the figure to the current directory which is [./code/](./code/).
 
 ---
