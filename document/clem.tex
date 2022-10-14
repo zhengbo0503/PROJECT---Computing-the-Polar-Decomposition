@@ -40,19 +40,19 @@ No citations.%
 
 %% Fonts %%
 
-\usepackage[T1]{fontenc}
-\DeclareFontFamily{OT1}{rsfs}{}
-\DeclareFontShape{OT1}{rsfs}{n}{it}{<-> rsfs10}{}
-\DeclareMathAlphabet{\mathscr}{OT1}{rsfs}{n}{it}
-\usepackage{lmodern} \normalfont %to load T1lmr.fd
-\DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
-\usefont{T1}{qzc}{m}{it}
-\usepackage{eucal}
+% \usepackage[T1]{fontenc}
+% \DeclareFontFamily{OT1}{rsfs}{}
+% \DeclareFontShape{OT1}{rsfs}{n}{it}{<-> rsfs10}{}
+% \DeclareMathAlphabet{\mathscr}{OT1}{rsfs}{n}{it}
+% \usepackage{lmodern} \normalfont %to load T1lmr.fd
+% \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
+% \usefont{T1}{qzc}{m}{it}
+% \usepackage{eucal}
 
-% \usepackage[lucidascale=false]{lucimatx}
-% \AtBeginDocument{
-%   \DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
-%   \DeclareSymbolFontAlphabet{\mathbb}{AMSb}}
+\usepackage[scale=0.9]{lucimatx}
+\AtBeginDocument{
+  \DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+  \DeclareSymbolFontAlphabet{\mathbb}{AMSb}}
 
 %% MATLAB Code %%% From Dr. Chris Johnson
 \usepackage{listings}
@@ -68,7 +68,7 @@ No citations.%
   keywordstyle=\color{blue},
   numberstyle=\tiny\color{codegray},
   stringstyle=\color{codepurple},
-  basicstyle=\linespread{0.9}\ttfamily\footnotesize,
+  basicstyle=\linespread{1}\ttfamily\footnotesize,
   breakatwhitespace=false,
   breaklines=true,
   captionpos=b,

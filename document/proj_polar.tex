@@ -7,7 +7,7 @@
 \title{Project : Computing the Polar Decomposition}
 \author{Zhengbo Zhou%
     \thanks{%
-        School of Mathematics,
+        Department of Mathematics,
         University of Manchester,
         Manchester, M13 9PL, England
         (\texttt{zhengbo.zhou@postgrad.manchester.ac.uk}).
@@ -26,7 +26,7 @@ Before introducing the matrix norm, a brief illustration of the vector norm is n
 
 \begin{definition}
   [Vector Norm] \label{def:vector-norm}
-  A vector norm on $\C^n$ is a function $\gnorm{\cdot} : \C^n \to \R$ such that it satisfies the following properties
+  A vector norm on $\C^n$ is a function $\gnorm{\cdot} : \C^n \to \R$  that  satisfies the  properties
   \begin{enumerate}
     \item $\gnorm{x} \geq 0$ for all $x\in\C\n$,
     \item $\gnorm{x} = 0$ if and only if $x = 0$,
@@ -54,7 +54,7 @@ Before introducing the matrix norm, a brief illustration of the vector norm is n
 \subsection{Matrix Norms} \label{subsec:matrix-norms}
 \begin{definition}
     [Matrix Norms]
-    A matrix norm is a function $\gnorm{\cdot}:\C\mn \to \R$ satisfies the analogues of the four properties in the Definition~\ref{def:vector-norm}.
+    A matrix norm is a function $\gnorm{\cdot}:\C\mn \to \R$ that satisfies the analogues of the four properties in the Definition~\ref{def:vector-norm}.
 \end{definition}
 
 \begin{example}
@@ -201,15 +201,18 @@ where $P$ and $Q$ are unitary, and $R\in\C^{r\times r}$ is nonsingular and upper
 \end{theorem}
 
 \begin{proof}
-    $(\Leftarrow)$: If $U$ and $H$ are commute, then 
+    $(\Leftarrow)$: If $U$ and $H$ commute, then 
     \begin{equation}
         \notag
         \begin{aligned}
             AA\ctp &= \left(UH\right)\left(UH\right)\ctp\\
-                & = \left(HU\right)\left(HU\right)\ctp = HUU\ctp H\ctp = H^2. \\
-            A\ctp A & = H^2 = AA\ctp.
-        \end{aligned}
+                & = \left(HU\right)\left(HU\right)\ctp = HUU\ctp H\ctp = H^2 \\
+            \end{aligned}
     \end{equation}
+    and 
+    \begin{equation*}
+        A\ctp A = H^2 = AA\ctp.
+    \end{equation*}
     Hence $A$ is normal.
 
     $(\Rightarrow)$: If $A$ is normal, we have $AA\ctp = UHH\ctp U\ctp=UH^2U\ctp$ and $A\ctp A = H^2$. By taking the principal square root of both sides of $UH^2 U\ctp = H^2$, we have $UHU\ctp = H$~(see~\ycite[2008, Theorem~1.26 and 1.29]{2008higham-fm}). Since $U$ is unitary, we have $UH = HU$, which completes the proof.
@@ -253,10 +256,10 @@ where $P$ and $Q$ are unitary, and $R\in\C^{r\times r}$ is nonsingular and upper
         \end{aligned}
     \end{equation}
     Notice that, the matrix $I$ and $\Sigma\left(t^2 I + \Sigma^2\right)\inv$ 
-    are all diagonal, therefore we can divide the problem element-wise
+    are all diagonal, therefore we can write the problem element-wise
     \begin{equation}
         \label{eq:2}
-        \frac{2}{\pi}\int_0^\infty \frac{\sigma_i}{t^2 + \sigma_i^2} \dd t = 1,\quad \text{for all $i = 1,\dots,n$.}
+        \frac{2}{\pi}\int_0^\infty \frac{\sigma_i}{t^2 + \sigma_i^2} \dd t = 1,\quad \text{$i = 1,\dots,n$.}
     \end{equation}
     The remaining task is to show that the integral from the left side of \eqref{eq:2} is equal to $1$. First notice that, since $A$ is full rank, the singular values $\sigma_1, \dots, \sigma_n$ are all positive. Then we can evaluate the integral for each $i = 1,\dots,n$
     \begin{equation}
@@ -270,20 +273,20 @@ where $P$ and $Q$ are unitary, and $R\in\C^{r\times r}$ is nonsingular and upper
 
 \section{Newton's Method}
 
-The Newton iteration for the unitary factor of a square matrix $A$ can be derived by applying the Newton's method to the equation $X\ctp X = I_n$. Consider a function $F(\wt X) = \wt X\ctp \wt X - I_n$, then $X$ is unitary if $X$ is a zero of the function $F(\wt X)$. 
+The Newton iteration for the unitary factor of a square matrix $A$ can be derived by applying the Newton's method to the equation $X\ctp X = I$. Consider a function $F(\wt X) = \wt X\ctp \wt X - I$, then $X$ is unitary if $X$ is a zero of the function $F(\wt X)$. 
 
 Suppose $Y$ is an approximate solution to the equation $F(\wt X) = 0$, we can write $\wt X = Y + E$ where $E$ is a ``small perturbation'' and substitute $\wt X$ into the equation $F(\wt X) = 0$
 \begin{equation}\notag
-    (Y+E)\ctp (Y+E) - I_n = Y\ctp Y + Y\ctp E + E\ctp Y + E\ctp E - I_n = 0.
+    (Y+E)\ctp (Y+E) - I = Y\ctp Y + Y\ctp E + E\ctp Y + E\ctp E - I = 0.
 \end{equation}
-Dropping the second order term, we get Newton iteration $Y\ctp Y + Y\ctp E + E\ctp Y - I_n = 0$ and this is the Sylvester equation for $E$~\ycite[2008, Problem~8.18]{2008higham-fm}. We aim to solve $E$ and update $Y$ by $Y + E$, which gives the Newton iteration at the $k$th step:
+Dropping the second order term, we get Newton iteration $Y\ctp Y + Y\ctp E + E\ctp Y - I = 0$ and this is the Sylvester equation for $E$~\ycite[2008, Problem~8.18]{2008higham-fm}. We aim to solve $E$ and update $Y$ by $Y + E$, which gives the Newton iteration at the $k$th step:
 \begin{equation}\label{eq:4}
     \begin{cases}
-        X_k \ctp X_{k} + X_{k}\ctp E_k + E_k\ctp X_k - I_n = 0,\\
+        X_k \ctp X_{k} + X_{k}\ctp E_k + E_k\ctp X_k - I = 0,\\
         X_{k+1} = X_{k} + E_k.
     \end{cases}
 \end{equation}
-Assume that $X_k\ctp E_k$ is Hermitian, namely $X_k\ctp E_k = E_k\ctp X_k$, then we can further simplify the iteration by rewritten~\eqref{eq:4} as $X_k\ctp E_k = (I_n - X_k\ctp X_k)/2$ and the expression we got for $X_k\ctp E_k$ is indeed Hermitian, hence our assumption is valid. Therefore, we have a explicit expression for $E_k$, $E_k = (X_k^{-*} - X_k)/2$, and the iteration~\eqref{eq:4} becomes 
+Assume that $X_k\ctp E_k$ is Hermitian, namely $X_k\ctp E_k = E_k\ctp X_k$, then we can further simplify the iteration by rewritten~\eqref{eq:4} as $X_k\ctp E_k = (I - X_k\ctp X_k)/2$ and the expression we got for $X_k\ctp E_k$ is indeed Hermitian, hence our assumption is valid. Therefore, we have a explicit expression for $E_k$, $E_k = (X_k^{-*} - X_k)/2$, and the iteration~\eqref{eq:4} becomes 
 \begin{equation}\notag
     X_{k+1} = X_{k} + \frac 12 (X_k^{-*}-X_k) = \frac 12(X_k^{-*} + X_k)
 \end{equation}
@@ -298,7 +301,7 @@ choosing $X_0 = A$, we have our desired Newton iteration:
 Before looking into the convergence, an important property for the matrix $2$-norm and the Frobenius norm should be presented.
 \begin{theorem} 
     \label{thm:matrix-invariant-norm}
-    The Frobenius norm and matrix 2-norm are the unitarily invariant norm. Namely, the following norm equality holds for these two norms
+    The Frobenius norm and matrix $2$-norm are unitarily invariant norm. Namely, the following equality holds for these two norms
     \begin{equation}\notag
       \gnorm{UAV} = \gnorm{A},\quad \text{$A\in\C\nn$, $U$ and $V$ are unitary.}
     \end{equation}
@@ -370,10 +373,10 @@ Hence we proved the theorem.
     \begin{equation}\label{eq:quadConv}
         d_i^{(k+1)}-1=\frac{1}{2 d_i^{(k)}}\left(d_i^{(k)^2}-2 d_i^{(k)}+1\right)=\frac{1}{2 d_i^{(k)}}\left(d_i^{(k)}-1\right)^2.
     \end{equation}
-    This implies that the diagonal entries of $D_k$ converge to $1$ quadratically as $k\to\infty$ and this holds for all $i = 1,2,\dots, n$, therefore we can conclude that $\lim_{k\to \infty}D_k = I_n$ quadratically. Use the definition of $D_k$, \eqref{eq:defofDk}, we have 
+    This implies that the diagonal entries of $D_k$ converge to $1$ quadratically as $k\to\infty$ and this holds for all $i = 1,2,\dots, n$, therefore we can conclude that $\lim_{k\to \infty}D_k = I$ quadratically. Use the definition of $D_k$, \eqref{eq:defofDk}, we have 
     \begin{equation}
         \notag
-        \lim_{k\to\infty} X_k = \lim_{k\to\infty} PD_kV\ctp = PI_n V\ctp = PV\ctp = U,
+        \lim_{k\to\infty} X_k = \lim_{k\to\infty} PD_kV\ctp = PI V\ctp = PV\ctp = U,
     \end{equation}
     where $U$ is the unitary polar factor of the polar decomposition of $A$, and this convergence is quadratic. 
 
@@ -400,14 +403,14 @@ Hence we proved the theorem.
     which is equivalent as 
     \begin{equation}
         \notag 
-        D_{k+1} - I_n = \frac{1}{2} D_k\inv (D_k - I_n)^2.
+        D_{k+1} - I = \frac{1}{2} D_k\inv (D_k - I)^2.
     \end{equation}
     Taking the norm on both sides, we have 
     \begin{equation}
         \label{eq:Dineq} 
-        \gnorm{D_{k+1} - I_n} = \frac{1}{2} \gnorm{D_k\inv (D_k - I_n)^2}\leq \frac{1}{2} \gnorm{D_k\inv}\gnorm{D_k - I}^2.
+        \gnorm{D_{k+1} - I} = \frac{1}{2} \gnorm{D_k\inv (D_k - I)^2}\leq \frac{1}{2} \gnorm{D_k\inv}\gnorm{D_k - I}^2.
     \end{equation}
-    The final inequality comes from the fact that every unitarily invariant norm is subordinate~\ycite[1997, Proposition~IV~2.4]{1997-matrix-analysis}. Also, the unitarily invariance implies the following three equalities,
+    The final inequality comes from the fact that every unitarily invariant norm is submultiplicative~\ycite[1997, Proposition~IV~2.4]{1997-matrix-analysis}. Also, the unitary invariance implies the following three equalities,
     \begin{itemize}
         \item $\gnorm{D_{k+1}- I} = \gnorm{PD_{k+1} V\ctp - PV\ctp} = \gnorm{X_{k+1} - U}$. 
         \item $\gnorm{D_k\inv} = \gnorm{VD_k\inv P\ctp} =\gnorm{X_k\inv}$.
@@ -428,13 +431,17 @@ The Newton iteration
     \notag
     X_{k+1} = \frac 12(X_k^{-*} + X_k),\quad X_0 = A,
 \end{equation}
-requires the explicit form of a matrix inverse, and this can be avoided by using a one step of the Schulz iteration $Y_{k+1} = Y_k(2I_n - AY_k)$~\ycite[1965]{Adi1965-MatrixInverse} where $Y_0$ is an approximation to $A\inv$, and this iteration will converge to $A\inv$. To approximate the inverse of $X_k\ctp$, we have the one step of the Schulz iteration 
+requires the explicit computation of a matrix inverse. One way to remove the inverse from the formula is to approximate it by one step of Newton's method for the matrix inverse~\ycite[2008, Sec.~7.4]{2008higham-fm}, which has the form 
 \begin{equation}
     \notag 
-    X_k^{-*} \approx X_k(2I_n - X_k\ctp X_k).
+    Y_{k+1} = Y_k(2I - AY_k),
 \end{equation}
-This approach takes advantage of the fact that since the $X_k$ converges quadratically, it is an increasingly good approximation to $X_k^{-*}$.
-Substituting this expression into the Newton iteration, we have the Newton--Schulz iteration~\ycite[2008, Section~8.3]{2008higham-fm} 
+for computing $A\inv$. This iteration is also known as the Schulz iteration~\ycite[1933]{Schulz1933} and the approximation of the inverse of $X_k\ctp$ can be written as
+\begin{equation}
+    \label{eq:nsiii} 
+    X_k^{-*} \approx X_k(2I - X_k\ctp X_k).
+\end{equation}
+This approach takes advantage of the fact that since the $X_k$ converges quadratically, \eqref{eq:nsiii} is an increasingly good approximation to $X_k^{-*}$. Substituting this expression into the Newton iteration, we have the Newton--Schulz iteration~\ycite[2008, Section~8.3]{2008higham-fm} 
 \begin{equation}
     \label{eq:ns-iteration}
     X_{k+1} = \frac 12 X_k\left(3I - X_k\ctp X_k\right), \quad X_0 = A,
@@ -443,7 +450,7 @@ and this iteration will converge to the unitary polar factor of $A$.
 
 \subsection{Convergence of the Newton--Schulz Iteration}
 The convergence of the Newton--Schulz iteration can be proved 
-using the similar approach as proof of Theorem~\ref{thm:newton-converge}. Let $P\Sigma V\ctp$ be the SVD of $A$ and define $D_k = P\ctp X_k V$. It is obvious that $D_0 = \Sigma$ and 
+using a similar approach as in the proof of Theorem~\ref{thm:newton-converge}. Let $P\Sigma V\ctp$ be the SVD of $A$ and define $D_k = P\ctp X_k V$. It is obvious that $D_0 = \Sigma$ and 
 \begin{equation}
     \notag 
     \begin{aligned}
@@ -462,7 +469,7 @@ From $D_k = P\ctp X_k V$, we have $D_k\ctp = V\ctp X_k\ctp P$ and then we can re
 Notice that $D_0 = \Sigma$ is a diagonal matrix, therefore it is obvious that all $D_k$ for $k = 1,2,\dots$ are diagonal matrices. Therefore, \eqref{eq:ns-iter1} becomes 
 \begin{equation}
     \label{eq:D-iteration}
-    D_{k+1} = \frac{1}{2}D_k(3I_n - D_k^2),\quad D_0 = \Sigma.
+    D_{k+1} = \frac{1}{2}D_k(3I - D_k^2),\quad D_0 = \Sigma.
 \end{equation}
 
 Let $D_k = \diag\left(d_i\iter{k}\right)$ where $i=1,2,\dots,n$. The iteration~\eqref{eq:D-iteration} can be written in an element-wise manner
@@ -499,7 +506,7 @@ where $\sigma_i$ is the $i$th singular value of $A$.
         \label{fig:11}
     \end{figure}
 
-    Other parts of the real line may still converges to $1$ but the interval of converges are too short to consider and control (for example, if we start with $d_0 = 2.2$, then $d_1 = f(d_0) = -2.0240$ and $d_2 = 1.1097 \in (0,\sqrt{3})$ which will converges to $1$).
+    Other parts of the real line may still converges to $1$ but the interval of convergence is too short to consider and control (for example, if we start with $d_0 = 2.2$, then $d_1 = f(d_0) = -2.0240$ and $d_2 = 1.1097 \in (0,\sqrt{3})$ which will converges to $1$).
 
     Remain to show that the convergence is of order $2$. By consider the difference $d_{k+1} - 1$ (similar approach as~\eqref{eq:quadConv}), we have 
     \begin{equation}\label{eq:NS-iter-scalar}
@@ -511,7 +518,7 @@ where $\sigma_i$ is the $i$th singular value of $A$.
 \begin{theorem}
     [Convergence of the Newton--Schulz iteration~\eqref{eq:ns-iteration}]
     \label{thm:newtonSchulzConverge}
-    For $A\in\C\nn$ of rank $n$ which has the polar decomposition $A = UH$, if $\sigma_i(A) \in (0,\sqrt{3})$ or equivalently $\norm{A} < \sqrt{3}$, then the Newton--Schulz iteration 
+    For $A\in\C\nn$ of rank $n$ which has the polar decomposition $A = UH$, if $\sigma_i(A) \in (0,\sqrt{3})$, then the Newton--Schulz iteration 
     \begin{equation}\notag
         X_{k+1} = \frac 12 X_k(3I-X_k\ctp X_k),\quad X_0 = A,
     \end{equation}
@@ -523,14 +530,14 @@ where $\sigma_i$ is the $i$th singular value of $A$.
 \end{theorem}
 
 \begin{proof}
-    By Lemma~\ref{lemma:scalarNS}, the diagonal entries of $D_k$ converge to $1$ quadratically and this is equivalent as $D_k$ converges to $I_n$ quadratically as $k\to\infty$. Using the definition of $D_k$, we conclude that $X_k$ converges to $U$, the unitary polar factor of $A$, quadratically.
+    By Lemma~\ref{lemma:scalarNS}, the diagonal entries of $D_k$ converge to $1$ quadratically and this is equivalent as $D_k$ converges to $I$ quadratically as $k\to\infty$. Using the definition of $D_k$, we conclude that $X_k$ converges to $U$, the unitary polar factor of $A$, quadratically.
 
     From \eqref{eq:NS-iter-scalar} and the proof of Theorem~\ref{thm:newton-converge}, we have 
     \begin{equation}
         \notag 
         \begin{aligned}
-            \gnorm{D_{k+1} - I_n} &= \frac{1}{2}\gnorm{(D_k - I_n)(D_k - I_n)(D_k + 2I_n)} \\
-            & \leq \frac{1}{2}\gnorm{D_k - I_n}^2 \gnorm{D_k + 2I_n}.\\
+            \gnorm{D_{k+1} - I} &= \frac{1}{2}\gnorm{(D_k - I)(D_k - I)(D_k + 2I)} \\
+            & \leq \frac{1}{2}\gnorm{D_k - I}^2 \gnorm{D_k + 2I}.\\
             \Rightarrow 
             \gnorm{X_{k+1} - U} &\leq \frac{1}{2} \gnorm{X_k - U}^2 \gnorm{X_k + 2U}.
         \end{aligned}
@@ -574,10 +581,10 @@ then clearly, we require two matrix-matrix multiplications and one matrix-matrix
     \notag 
     \sum_{i=1}^n\sum_{j=i}^n\sum_{k=1}^n 2 = n^3 + O(n^2)
 \end{equation}
-to compute $X_k\ctp X_k$. Together with the product $X_k(X_k\ctp X_k)$, the total cost of the Newton--Schulz iteration per step will be $3n^3 + O(n^2)$ flops.
+flops to compute $X_k\ctp X_k$. Together with the product $X_k(X_k\ctp X_k)$, the total cost of the Newton--Schulz iteration per step will be $3n^3 + O(n^2)$ flops.
 
 \subsection{Conclusion}
-Base on previous discussions, we conclude 
+Based on previous discussions, we conclude 
 \begin{enumerate}
     \item For Newton's method, which involves matrix inversion, requires $2n^3 + O(n^2)$ flops per step while using the LU decomposition with pivoting.
     \item For Newton--Schulz iteration, which involves matrix multiplications, requires $3n^3 + O(n^2)$ flops per step.
@@ -593,11 +600,11 @@ In this section, we will present an algorithm that computes the polar decomposit
     H = \frac{1}{2}\left(U\ctp A + A\ctp U\right).
 \end{equation}
 
-We need to determine an appropriate condition for us to switch from Newton to Newton--Schulz. From Theorem~\ref{thm:newtonSchulzConverge}, the Newton--Schulz iteration will converge if the input $X_k$ satisfies $\norm{X_k} < \sqrt{3}$. However, matrix 2-norm is rather expensive to compute, and we should view the convergence in the following alternative way.
+We need to determine an appropriate condition for us to switch from Newton to Newton--Schulz. From Theorem~\ref{thm:newtonSchulzConverge}, the Newton--Schulz iteration will converge if the input $X_k$ satisfies $\norm{X_k} < \sqrt{3}$. However, the matrix 2-norm is rather expensive to compute, and we should view the convergence in the following alternative way.
 
 \begin{theorem}
     \label{thm:Conv-in-R}
-    For $A\in\C\nn$ of rank $n$ which has the polar decomposition $A=UH$ and given the Newton--Schulz iteration 
+    Let $A\in\C\nn$ of rank $n$ has the polar decomposition $A=UH$, and the Newton--Schulz iteration for computing the unitary polar factor $U$ is given by
     \begin{equation}
         \notag 
         X_{k+1} = \frac{1}{2}X_k(3I - X_k\ctp X_k), \quad X_0 = A.
@@ -667,8 +674,6 @@ Instead of switching from Newton iteration to Newton--Schulz iteration at the $k
 \end{equation}
 which implies that the Newton--Schulz iteration will certainly converge. Therefore, we can compute $R_{k}$ at each step, once $\gnorm{R_k}\leq\theta<1$, we can switch to Newton--Schulz. In~\ycite[1990, p.~652]{hisc90}, it suggests, to ensure fast convergence, $\theta$ should not be too close to $1$ and here we choose $\theta = 0.6$ which is used by \cite{hisc90}.
 
-Notice that since the 2-norm and the $\infty$-norm are equivalent, hence it is reasonable to use $\infty$-norm for the errors even though the infinity norm is not a unitarily invariant norm.
-
 \subsection{Termination Condition}
 Suppose $\eta$ is some positive tolerance, a natural way of terminating an iteration is the following: Define the relative difference $\delta_{k+1} = \gnorm{X_{k+1} - X_{k}}/\gnorm{X_{k+1}}$ between two successive iterators, we stop the iteration once $\delta_{k+1} \leq \eta$. However, as suggested by~\ycite[2008, Sec.~4.9.2]{2008higham-fm}, in floating point arithmetic there is typically no guarantee that $\delta_k$ will reach the tolerance $\eta$. The solution is to add another criterion which terminates the iteration once the relative change has not decreased by a factor of at least 2.
 
@@ -684,7 +689,7 @@ In summary, the computation of the polar decomposition of $A\in\C\nn$ can be sum
 
 \begin{algorithm}[hbt!]
     \floatname{algorithm}{Algorithm} 
-    \caption{Given $A\in\C\nn$ of rank $n$. This algorithm computes the polar decomposition $A = UH$ using both the Newton iteration and the Newton--Schulz iteration. $\eta$ is a positive tolerance which is the machine epsilon at double precision by default.}
+    \caption{Given $A\in\C\nn$ of rank $n$, this algorithm computes the polar decomposition $A = UH$ using both the Newton iteration and the Newton--Schulz iteration. $\eta$ is a positive convergence tolerance which is the machine epsilon at double precision by default.}
     \label{alg:poldec}
     \begin{algorithmic}[1]
         \State Let $X = A$, \inline{switch = false}
@@ -730,7 +735,7 @@ Our experiments are running under the following environment:
 We will test our MATLAB code in Appendix~\ref{app:poldec.m} using the following matrices:
 \begin{itemize}
     \item \inline{randn(n)} : An $\R\nn$ matrix containing pseudorandom values drawn
-    from the standard normal distribution.
+    from the standard normal distribution. The random number generator is controlled by \inline{rng(1)}.
     \item \inline{eye(8)} : The $8\times 8$ identity matrix.
     \item \inline{hilb(6)} : The $6\times 6$ matrix with elements $1/(i+j-1)$, which is a
     famous example of a badly conditioned matrix.
@@ -741,17 +746,17 @@ We will test our MATLAB code in Appendix~\ref{app:poldec.m} using the following 
 \end{itemize}
 
 \subsection{Results and Comments}
-After applying the Algorithm~\ref{alg:poldec} on the above test matrices, we have the data shown in Table~\ref{tab:numerical-data}. The testing routine can be found in Appendix~\ref{app:testingroutine}, and we produce the figures contain how $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ change with respect to the iteration. The figures (except for \inline{eye(8)}) can be found in Appendix~\ref{app:figs}. We have the following comments on the results:
+After applying Algorithm~\ref{alg:poldec} on the above test matrices, we have the data shown in Table~\ref{tab:numerical-data}. The testing routine can be found in Appendix~\ref{app:testingroutine}, and we produce the figures contain how $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ change with respect to the iteration. The figures (except for \inline{eye(8)}) can be found in Appendix~\ref{app:figs}. We have the following comments on the results:
 
 \begin{itemize}
-    \item \inline{randn(n)}: The algorithm works perfect, and we indeed have a polar decomposition $A = UH$, and the unitary polar factor is unitary as expected. 
+    \item \inline{randn(n)}: The algorithm works perfectly, and we indeed have a polar decomposition $A = UH$, and the unitary polar factor is unitary as expected. 
     \item \inline{eye(8)}: The algorithm converges after one iteration since the input $A$ is the same as the expected result $U$, which are both $I_8$. The polar decomposition for $I_8$ is then $I_8 \cdot I_8$.
     \item \inline{hilb(6)}: Hilbert matrix is badly conditioned as seen from the Table~\ref{tab:numerical-data}, $\kappa_\infty(H_6)$ is $O(10^7)$. Due to bad conditioning, although $\inorm{H\ctp H - I}$ can be small, but after one iteration, the matrix $X_{1} = (H^{-*} + H)/2$ can have a large $\inorm{X_1\ctp X_1 - I}$ as shown in Figure~\ref{fig:hilb6} and the following output.
 \begin{lstlisting}
->> rng(1); H = hilb(6); norm(H'*H-eye(6),"inf")
+>> rng(1); H = hilb(6); norm(H'*H-eye(6),inf)
 ans =
    3.1932e+00
->> X = 0.5*(inv(H)'+H); norm(X'*X-eye(6),"inf")
+>> X = 0.5*(inv(H)'+H); norm(X'*X-eye(6),inf)
 ans =
    2.7423e+13
 \end{lstlisting}
@@ -828,9 +833,9 @@ end
 I = eye(n); term_tol = sqrt(2*err)*sqrt(n); maxiter = 1e6;
 X = A; switched = false; 
 delta = zeros(maxiter,1); Rk = zeros(maxiter,1);
-for its = 1:1:maxiter
+for its = 1:maxiter
     % check if switch to Newton Schulz
-    Rk(its) = norm(X'*X - I,"inf");
+    Rk(its) = norm(X'*X - I,inf);
     if Rk(its) <= 0.6
         switched = true;
     end
@@ -838,7 +843,7 @@ for its = 1:1:maxiter
     if switched % Newton Schulz iteration
         tmp = X;
         X = 1.5*X - 0.5*X*(X'*X);
-        delta(its+1) = norm(X - tmp,"inf")/norm(X,"inf"); % store error
+        delta(its+1) = norm(X - tmp,inf)/norm(X,inf); % store error
         % termination condition
         if delta(its+1) < term_tol || (delta(its+1) > delta(its)/(2) && its ~= 1)
             break;
@@ -846,7 +851,7 @@ for its = 1:1:maxiter
     else % Newton iteration
         tmp = X;
         X = 0.5*(inv(X)' + X);
-        delta(its+1) = norm(X - tmp,"inf")/norm(X,"inf"); % store error
+        delta(its+1) = norm(X - tmp,inf)/norm(X,inf); % store error
     end
 end
 H = 0.5*(X'*A + A'*X); % construct H
@@ -864,13 +869,13 @@ term_tol = sqrt(2*eps("double"))*sqrt(size(A,1));
 [U_d,H_d,its_d,del_d,Rk_d] = poldec(A);
 [U_q,H_q,its_q,del_q,Rk_q] = poldec(A,5e-34);
 % printing results
-fprintf("Condition number = %.4d\n", cond(A,"inf"));
+fprintf("Condition number = %.4d\n", cond(A,inf));
 fprintf("Iteration required = %d\n", its_d);
-tmp1 = norm(A - U_d*H_d, "inf")/norm(A,"inf");
+tmp1 = norm(A - U_d*H_d, inf)/norm(A,inf);
 fprintf("norm(A-UH)/norm(A) = %.4d\n", tmp1);
 tmp2 = norm(U_d'*U_d - eye(size(A,1)));
 fprintf("norm(U'*U-I) = %.4d\n", tmp2);
-tmp3 = norm(U_d - U_q,"inf");
+tmp3 = norm(U_d - U_q,inf);
 fprintf("norm(U-U_ref) = %.4d\n", tmp3);
 
 if print 
@@ -894,8 +899,8 @@ end
 \begin{lstlisting}
 function H = polsqrt(A)
 %POLSQRT Matrix square root using polar decomposition.
-% H = poldec(A) computes the matrix square root of the symmetric positive
-% definite matrix A, such that norm(H^2 - A) is small.
+% H = poldec(A) computes the matrix square root of the symmetric 
+% positive definite matrix A, such that norm(H^2 - A) is small.
 R = chol(A);
 [~,H] = poldec(R);
 end

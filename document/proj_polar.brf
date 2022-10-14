@@ -7,11 +7,12 @@
 \backcite {2008higham-fm}{{6}{3.2}{theorem.3.2}}
 \backcite {Henrici1964ElementofNA}{{7}{3.1}{equation.3.8}}
 \backcite {1997-matrix-analysis}{{7}{3.1}{equation.3.10}}
-\backcite {Adi1965-MatrixInverse}{{8}{4}{equation.4.1}}
+\backcite {2008higham-fm}{{8}{4}{equation.4.1}}
+\backcite {Schulz1933}{{8}{4}{equation.4.1}}
 \backcite {2008higham-fm}{{8}{4}{equation.4.1}}
 \backcite {high:ASNA2}{{10}{5}{section.5}}
 \backcite {TopicsInMatrixAnalysis:1991}{{12}{6.2}{equation.6.2}}
-\backcite {2008higham-fm}{{13}{6}{equation.6.2}}
+\backcite {2008higham-fm}{{12}{6}{equation.6.2}}
 \backcite {hisc90}{{13}{6.1}{equation.6.2}}
 \backcite {hisc90}{{13}{6.1}{equation.6.2}}
 \backcite {2008higham-fm}{{13}{6.2}{subsection.6.2}}
