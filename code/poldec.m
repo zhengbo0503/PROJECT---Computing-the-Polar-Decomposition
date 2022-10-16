@@ -18,7 +18,7 @@ X = A; switched = false;
 delta = zeros(maxiter,1); Rk = zeros(maxiter,1);
 for its = 1:1:maxiter
     % check if switch to Newton Schulz
-    Rk(its) = norm(X'*X - I,"inf");
+    Rk(its) = norm(X'*X - I, inf);
     if Rk(its) <= 0.6
         switched = true;
     end
@@ -26,7 +26,7 @@ for its = 1:1:maxiter
     if switched % Newton Schulz iteration
         tmp = X;
         X = 1.5*X - 0.5*X*(X'*X);
-        delta(its+1) = norm(X - tmp,"inf")/norm(X,"inf"); % store error
+        delta(its+1) = norm(X - tmp, inf)/norm(X, inf); % store error
         % termination condition
         if delta(its+1) < term_tol || (delta(its+1) > delta(its)/(2) && its ~= 1)
             break;
@@ -34,7 +34,7 @@ for its = 1:1:maxiter
     else % Newton iteration
         tmp = X;
         X = 0.5*(inv(X)' + X);
-        delta(its+1) = norm(X - tmp,"inf")/norm(X,"inf"); % store error
+        delta(its+1) = norm(X - tmp, inf)/norm(X, inf); % store error
     end
 end
 H = 0.5*(X'*A + A'*X); % construct H
