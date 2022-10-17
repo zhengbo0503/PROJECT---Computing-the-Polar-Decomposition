@@ -1,8 +1,5 @@
 \documentclass[12pt]{article}
-
-\usepackage{a4} 
-\input{clem.tex}
-\usepackage{booktabs}
+\input{pre/clem.tex}
 
 \title{Project : Computing the Polar Decomposition}
 \author{Zhengbo Zhou%
@@ -17,6 +14,7 @@
 
 \begin{document}
 \maketitle
+
 
 \section{Preliminaries}\label{sec:norms-svd}
 
@@ -40,7 +38,7 @@ Before introducing the matrix norm, a brief illustration of the vector norm is n
     \begin{equation}\notag
         \begin{aligned}
             \text{1-norm : }& \gnorm{x}_1 = \sum_{i = 1}^n \abs{x_i},\\
-            \text{2-norm (Euclidean Norm) : }& \norm{x} = \left(\sum_{i = 1}^n \abs{x_i}^2\right)^{1/2} = \sqrt{x\ctp x},\\
+            \text{2-norm (Euclidean Norm) : }& \tnorm{x} = \left(\sum_{i = 1}^n \abs{x_i}^2\right)^{1/2} = \sqrt{x\ctp x},\\
             \text{$\infty$-norm : } & \gnorm{x}_{\infty} = \max_{1\leq i \leq n} \abs{x_i}.
         \end{aligned}
     \end{equation}
@@ -315,7 +313,7 @@ By the definition of the Frobenius norm, we have
         \|UAV\|_F^2 &= \tr\big(U AVV\ctp A\ctp U\ctp \big) = \tr\big( U AA\ctp U\ctp\big).
     \end{aligned}
 \end{equation}
-By the properties $\tr(AB) = \tr(BA)$, \eref{eq:thm2-2-proof1} simplifies to 
+By the properties $\tr(AB) = \tr(BA)$, \eqref{eq:thm2-2-proof1} simplifies to 
 \begin{equation}
     \label{eq:thm2-2-proof2}
     \|U AV\|_F^2 = \tr\big(A\ctp U\ctp U A\big) = \tr\big(A\ctp A\big) = \tr\big(AA\ctp\big) = \|A\|_F^2.
@@ -324,11 +322,11 @@ Hence we finished the proof for the Frobenius norm.
 
 By the definition of the matrix 2-norm, we have 
 \begin{equation}\notag
-    \norm{UAV}^2 = \rho(V\ctp A\ctp U\tp UAV) = \rho({V\tp A\ctp AV}).
+    \tnorm{UAV}^2 = \rho(V\ctp A\ctp U\tp UAV) = \rho({V\tp A\ctp AV}).
 \end{equation}
 Notice that if $V$ is unitary, then $A\ctp A$ and $V\ctp A\ctp A V$ are unitarily similar and share the same eigenvalues. Therefore $\rho(V\ctp A\ctp AV) = \rho (A\ctp A)$, therefore we have 
 \begin{equation}\notag
-    \norm{UAV}^2 = \rho(A\ctp A) = \norm{A}^2.
+    \tnorm{UAV}^2 = \rho(A\ctp A) = \tnorm{A}^2.
 \end{equation}
 Hence we proved the theorem.
 \end{proof}
@@ -501,7 +499,7 @@ where $\sigma_i$ is the $i$th singular value of $A$.
 
     \begin{figure}[ht]
         \centering 
-        \includegraphics[width=0.5\textwidth]{figs/newton-schulz-scalar.eps}
+        \includegraphics[width=0.5\textwidth]{images/newton-schulz-scalar.eps}
         \caption[The plot of $f(d_k)$ defined in~\eqref{eq:simplified-D-iter}.]{The plot of $f(d_k)$ defined in~\eqref{eq:simplified-D-iter} over $[-3,3]$. Three zeros of $f(d_k)$ are $d_k = -\sqrt{3},0$ and $\sqrt{3}$.}
         \label{fig:11}
     \end{figure}
@@ -600,7 +598,7 @@ In this section, we will present an algorithm that computes the polar decomposit
     H = \frac{1}{2}\left(U\ctp A + A\ctp U\right).
 \end{equation}
 
-We need to determine an appropriate condition for us to switch from Newton to Newton--Schulz. From Theorem~\ref{thm:newtonSchulzConverge}, the Newton--Schulz iteration will converge if the input $X_k$ satisfies $\norm{X_k} < \sqrt{3}$. However, the matrix 2-norm is rather expensive to compute, and we should view the convergence in the following alternative way.
+We need to determine an appropriate condition for us to switch from Newton to Newton--Schulz. From Theorem~\ref{thm:newtonSchulzConverge}, the Newton--Schulz iteration will converge if the input $X_k$ satisfies $\tnorm{X_k} < \sqrt{3}$. However, the matrix 2-norm is rather expensive to compute, and we should view the convergence in the following alternative way.
 
 \begin{theorem}
     \label{thm:Conv-in-R}
@@ -643,7 +641,7 @@ We can use $R_{k+1}$ to measure the distance between the iterator $X_k$ and the 
         \notag 
         \begin{aligned}
             \gnorm{A\ctp A - I} &= \gnorm{(A-U)\ctp (A+U)} \\
-            & \leq \gnorm{A-U}\norm{A+U}\quad \text{\ycite[1991, Cor.~3.5.10]{TopicsInMatrixAnalysis:1991}}\\
+            & \leq \gnorm{A-U}\tnorm{A+U}\quad \text{\ycite[1991, Cor.~3.5.10]{TopicsInMatrixAnalysis:1991}}\\
             & = (1+\sigma_1(A))\gnorm{A-U},
         \end{aligned}
     \end{equation}
@@ -657,7 +655,7 @@ We can use $R_{k+1}$ to measure the distance between the iterator $X_k$ and the 
         \notag
         \begin{aligned}
             \gnorm{(A-U)\ctp U} &= \gnorm{A-U} = \gnorm{(A\ctp A - I)(H + I)\inv}\\
-            & \leq \gnorm{A\ctp A - I}\norm{(H+I)\inv} \\
+            & \leq \gnorm{A\ctp A - I}\tnorm{(H+I)\inv} \\
             & = \frac{\gnorm{A\ctp A - I}}{1+\sigma_n(A)}.
         \end{aligned}
     \end{equation}
@@ -667,7 +665,7 @@ We can use $R_{k+1}$ to measure the distance between the iterator $X_k$ and the 
 This result shows that the two measures of orthonormality $\gnorm{A\ctp A - I}$ and $\gnorm{A-U}$ are essentially equivalent, hence the residual $\gnorm{X_k\ctp X_k - I}$ of an iterate is essentially the same as the error $\gnorm{U-X_k}$~\ycite[2008, Sec.~8.7]{2008higham-fm}.
 
 \subsection{Switching Condition}
-Instead of switching from Newton iteration to Newton--Schulz iteration at the $k$th step where $\norm{X_k} < \sqrt{3}$, we can use Theorem~\ref{thm:Conv-in-R} to characterise this absolute convergence. If $\gnorm{R_{k}} < 1$, then 
+Instead of switching from Newton iteration to Newton--Schulz iteration at the $k$th step where $\tnorm{X_k} < \sqrt{3}$, we can use Theorem~\ref{thm:Conv-in-R} to characterise this absolute convergence. If $\gnorm{R_{k}} < 1$, then 
 \begin{equation}
     \notag 
     \gnorm{R_{k+1}} \leq \frac{3}{4}\gnorm{R_k}^2 + \frac{1}{4}\gnorm{R_k}^3 < \frac{3}{4}\gnorm{R_k} + \frac{1}{4}\gnorm{R_k} = \gnorm{R_k},
@@ -809,140 +807,8 @@ The result shows that our code is valid. Here \inline{gallery('randsvd',50,-100)
 
 
 \newpage 
-\bibliographystyle{aomplain}
-\bibliography{bib.bib}
+\bibliographystyle{pre/nj-plain}
+\bibliography{pre/bib}
 \newpage 
-\appendix
-\section{Code for Algorithm~\ref{alg:poldec}} \label{app:poldec.m}
-\begin{lstlisting}
-function [X, H, its, delta, Rk] = poldec(A, TOL)
-%POLDEC Polar decomposition.
-% [U, H, ITS, DELTA, RK] = poldec(A) computes the polar decomposition 
-% A = U*H of the square, nonsingular matrix A. ITS is the number of
-% iterations for convergence. DELTA is the relative error between 
-% successive iterations. RK is the norm(X'X - I) at each iteration.
-[n,m] = size(A);
-if n ~= m
-    error('Input matrix is not square!');
-end
-if nargin == 2
-    err = TOL;
-else
-    err = eps("double");
-end
-I = eye(n); term_tol = sqrt(2*err)*sqrt(n); maxiter = 1e6;
-X = A; switched = false; 
-delta = zeros(maxiter,1); Rk = zeros(maxiter,1);
-for its = 1:maxiter
-    % check if switch to Newton Schulz
-    Rk(its) = norm(X'*X - I,inf);
-    if Rk(its) <= 0.6
-        switched = true;
-    end
-    % apply appropriate iterations
-    if switched % Newton Schulz iteration
-        tmp = X;
-        X = 1.5*X - 0.5*X*(X'*X);
-        delta(its+1) = norm(X - tmp,inf)/norm(X,inf); % store error
-        % termination condition
-        if delta(its+1) < term_tol || (delta(its+1) > delta(its)/(2) && its ~= 1)
-            break;
-        end
-    else % Newton iteration
-        tmp = X;
-        X = 0.5*(inv(X)' + X);
-        delta(its+1) = norm(X - tmp,inf)/norm(X,inf); % store error
-    end
-end
-H = 0.5*(X'*A + A'*X); % construct H
-end
-\end{lstlisting}
-\newpage 
-\section{Testing Routine} \label{app:testingroutine}
-\begin{lstlisting}
-% testing routine
-clc; clear; close all; format short e
-rng(1);
-print = true;
-A = hadamard(8); A_mp = mp(A, 34);
-term_tol = sqrt(2*eps("double"))*sqrt(size(A,1));
-[U_d,H_d,its_d,del_d,Rk_d] = poldec(A);
-[U_q,H_q,its_q,del_q,Rk_q] = poldec(A,5e-34);
-% printing results
-fprintf("Condition number = %.4d\n", cond(A,inf));
-fprintf("Iteration required = %d\n", its_d);
-tmp1 = norm(A - U_d*H_d, inf)/norm(A,inf);
-fprintf("norm(A-UH)/norm(A) = %.4d\n", tmp1);
-tmp2 = norm(U_d'*U_d - eye(size(A,1)));
-fprintf("norm(U'*U-I) = %.4d\n", tmp2);
-tmp3 = norm(U_d - U_q,inf);
-fprintf("norm(U-U_ref) = %.4d\n", tmp3);
-
-if print 
-    figure('Renderer', 'painters', 'Position', [200 200 900 900])
-    semilogy(1:its_d, del_d(2:its_d+1),'-^k', 'LineWidth', 2);
-    hold on;
-    semilogy(1:its_d, Rk_d(1:its_d),'-^r', 'LineWidth', 2);
-    semilogy(1:its_d, ones(1,its_d).*term_tol, '--b', 'LineWidth', 2);
-    legend("$\|X_{k+1}-X_{k}\|_{\infty}/\|X_{k+1}\|_{\infty}$", ...
-        "$\|X_k^*X_k - I\|_{\infty}$", ...
-        "Terminate tolerance", ...
-        "Location","southwest", ...
-        "Interpreter", "latex");
-    xlabel("Iteration");
-    axis square;
-    set(gca, "FontSize", 30)    
-end
-\end{lstlisting}
-
-\section{Routine for Matrix Square Root}\label{app:matrix-squareroot}
-\begin{lstlisting}
-function H = polsqrt(A)
-%POLSQRT Matrix square root using polar decomposition.
-% H = poldec(A) computes the matrix square root of the symmetric 
-% positive definite matrix A, such that norm(H^2 - A) is small.
-R = chol(A);
-[~,H] = poldec(R);
-end
-\end{lstlisting}
-
-\section{Figures}\label{app:figs}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.59\textwidth]{../code/randn20.pdf}
-    \caption{Behaviour of $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ with respect to the iteration when applying \inline{poldec} on \inline{randn(20)}.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../code/randn50.pdf}
-    \caption{Behaviour of $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ with respect to the iteration when applying \inline{poldec} on \inline{randn(50)}.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../code/randn100.pdf}
-    \caption{Behaviour of $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ with respect to the iteration when applying \inline{poldec} on \inline{randn(100)}.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../code/hilb6.pdf}
-    \caption{Behaviour of $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ with respect to the iteration when applying \inline{poldec} on \inline{hilb(6)}.}
-    \label{fig:hilb6}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../code/magic6.pdf}
-    \caption{Behaviour of $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ with respect to the iteration when applying \inline{poldec} on \inline{magic(6)}.}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{../code/hadamard8.pdf}
-    \caption{Behaviour of $\gnorm{X_{k+1} - X_{k}}_\infty/\gnorm{X_{k+1}}_\infty$ and $\gnorm{X\ctp X - I}_\infty$ with respect to the iteration when applying \inline{poldec} on \inline{hadamard(8)}.}
-\end{figure}
-
+\include{appendix.tex}
 \end{document}

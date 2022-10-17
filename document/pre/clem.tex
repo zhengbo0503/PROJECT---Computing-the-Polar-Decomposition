@@ -1,0 +1,226 @@
+%%% Algorithm
+\usepackage{algorithm, algpseudocode, comment}
+\usepackage{booktabs, bookmark}
+
+%%% Color, Hyperref and Backref
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=red,
+    citecolor=blue
+}
+\usepackage[hyperpageref]{backref}
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{
+    \ifcase #1 %
+    No citations.%
+    \or
+    (Cited on page #2.)
+    \else
+    (Cited on pages #2.)
+    \fi
+}
+
+%%% Page format required by Prof. Nick Higham
+\usepackage{pre/a4}
+
+%% Headnote and Footnotes
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\scshape Stochastic Calculus}
+\rhead{\scshape \rightmark}
+\fancyfoot[C]{Page~\thepage~of~\pageref*{LastPage}}
+\setlength{\headheight}{14.49998pt}
+
+%%% Captions and Figures
+\usepackage{caption,graphics,float}
+\captionsetup*{textfont={small,it},labelfont={small, sc}}
+\captionsetup*[figure]{name=Fig.}
+
+
+%%% Colored Box
+\usepackage{tcolorbox}
+\newtcolorbox{mybox}[1]{colback=white!90!black,colframe=white!40!black,fonttitle=\scshape\centering,title=#1}
+
+%%% AMS related
+\usepackage{enumerate,amsmath,amsfonts,amssymb,amsthm,mathtools}
+
+%% Theorems 
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{note}{Note}
+\newtheorem*{question}{Question}
+\newtheorem*{recall}{Recall}
+\newtheorem{exercise}[theorem]{Exercise}
+\numberwithin{equation}{section}
+
+
+%%% Fonts
+
+%% Computer Modern Font
+
+% \usepackage[T1]{fontenc}
+% \DeclareFontFamily{OT1}{rsfs}{}
+% \DeclareFontShape{OT1}{rsfs}{n}{it}{<-> rsfs10}{}
+% \DeclareMathAlphabet{\mathscr}{OT1}{rsfs}{n}{it}
+% \usepackage{lmodern} \normalfont %to load T1lmr.fd
+% \DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
+% \usefont{T1}{qzc}{m}{it}
+
+%% Lucida Bright Font
+
+\usepackage[math-style=iso, scale=0.9]{lucimatx}
+\AtBeginDocument{ % mathbb for lucimatx
+    \DeclareSymbolFont{AMSb}{U}{msb}{m}{n}
+    \DeclareSymbolFontAlphabet{\mathbb}{AMSb}}
+
+%%% MATLAB Code From Dr. Chris Johnson 
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{mygreen}{RGB}{28,172,0}
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{backcolour}{rgb}{0.95,0.95,1.92}
+\lstdefinestyle{mystyle}{
+	language=matlab,
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\linespread{1}\ttfamily\small,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    aboveskip=\medskipamount,
+    frame=single,
+}
+\lstset{style=mystyle}
+\def\inline{\lstinline[basicstyle=\upshape\ttfamily]}
+
+
+%%% Paired labels
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\inner{\langle}{\rangle}
+
+%%% vector bold
+\usepackage{bm}
+\renewcommand{\vec}[1]{\bm{#1}}
+
+%%% Real and Imaginary
+\renewcommand{\Re}[1]{\mathfrak{Re}\left\{{#1}\right\}}
+\renewcommand{\Im}[1]{\mathfrak{Im}\left\{{#1}\right\}}
+
+%%% Integrate from ... to ...
+\newcommand{\intii}{\int_{-\infty}^{\infty}}
+
+%%% MATHBB
+\newcommand{\mb}[1]{\mathbb{#1}}
+\newcommand{\N}{\mb{N}}
+\newcommand{\Z}{\mb{Z}} 
+\newcommand{\Q}{\mb{Q}}
+\newcommand{\R}{\mb{R}} 
+\newcommand{\C}{\mb{C}}
+\newcommand{\F}{\mb{F}}
+\renewcommand{\P}{\mb{P}} % Probability
+\newcommand{\E}{\mb{E}} % Expectation
+\newcommand{\V}{\mb{V}} % Variance
+
+%%% Greek Letters
+% NEVER define \l for \lambda due to Polish names in BibTeX
+\renewcommand{\L}{\Lambda}
+\newcommand{\vL}{\varLambda}
+\newcommand{\g}{\gamma}
+\newcommand{\G}{\Gamma}
+\newcommand{\vG}{\varGamma}
+\renewcommand{\o}{\omega}
+\renewcommand{\O}{\Omega}
+\newcommand{\vO}{\varOmega}
+\newcommand{\s}{\sigma}
+\renewcommand{\S}{\Sigma}
+\newcommand{\vS}{\varSigma}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\lap}{\varDelta}
+
+%%% Matrix Related
+\newcommand{\n}{^n}
+\newcommand{\Rn}{\R^n}
+\newcommand{\mn}{^{m\times n}}
+\newcommand{\nn}{^{n\times n}}
+\newcommand{\tp}{^T} 
+\newcommand{\ctp}{^*}
+\newcommand{\inv}{^{-1}}
+\newcommand{\diag}{\mathrm{diag}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\tr}{\mathrm{Tr}}
+\renewcommand{\det}{\mathrm{det}}
+\newcommand{\range}{Range}
+\renewcommand{\dim}{dim}
+\renewcommand{\span}{span}
+
+%% Norms
+\newcommand{\iter}[1]{^{(#1)}} % iteration
+\newcommand{\gnorm}[1]{\|{#1}\|} % general norm
+\newcommand{\tnorm}[1]{\|{#1}\|_2} % 2-norm
+\newcommand{\inorm}[1]{\|{#1}\|_\infty}
+
+%%% Over the expressions
+\newcommand{\wh}{\widehat}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wb}{\overline}
+
+%%% Calculus
+\newcommand{\grad}{\nabla}
+\renewcommand{\div}{\nabla\cdot}
+\newcommand{\curl}{\nabla\times}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\pp}{\partial}
+\def\eu{\mathrm{e}} % euler's constant
+\def\im{\mathrm{i}} % imaginary unit
+
+%%% Citation
+\def\ycite[#1#2#3#4#5]#6{\cite[$\mit{#1#2#3#4}$#5]{#6}}
+
+%%% Defined Proof Environment %% For Nick's Project Only
+% \def\proof{\par{\bf Proof}. \ignorespaces}
+% \def\qedsymbol{\vbox{\hrule\hbox{%
+%                      \vrule height1.3ex\hskip0.8ex\vrule}\hrule}}
+% \def\endproof{\qquad\qedsymbol\medskip\par}
+
+%%% MATHCAL and MATHSCR
+\usepackage{mathrsfs}
+\newcommand{\mc}[1]{\mathcal{#1}} % For spaces 
+\newcommand{\ms}[1]{\mathscr{#1}} % For sigma-algebra
+
+%%% Stochastic Calculus
+\newcommand{\ps}{$(\Omega,\mathscr F,\P)$}
+\newcommand{\ito}{It\^o}
+\usepackage{bbm}
+\newcommand{\indi}{\mathbbm{1}} % indicator function
+\usepackage{accsupp}
+\providecommand*{\napprox}{%
+  \BeginAccSupp{method=hex,unicode,ActualText=2249}%
+  \not\approx
+  \EndAccSupp{}%
+}
+
